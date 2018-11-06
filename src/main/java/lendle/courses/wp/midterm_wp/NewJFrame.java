@@ -6,10 +6,12 @@
 package lendle.courses.wp.midterm_wp;
 
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.AccessibleAttribute;
@@ -101,9 +103,10 @@ public class NewJFrame extends javax.swing.JFrame {
         try {
             jButton1.setEnabled(false);
             //從 combobox 抓出被選到的項目，存到變數裡
-            String selectedItem="";
+            String selectedItem=(String) jComboBox1.getSelectedItem();
             /////////////////////////////////////
             URL url = new URL(selectedItem);
+            
             String fileName = url.getFile();
             final File tempFile = File.createTempFile("tmp", fileName.substring(fileName.lastIndexOf(".")));
             progress = new ProgressDialog(this);
@@ -119,6 +122,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         jButton1.setEnabled(true);
                         //將下載好的項目加入到 jList 裡面
                         
+                        
                         ////////////////////////////
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
@@ -126,6 +130,12 @@ public class NewJFrame extends javax.swing.JFrame {
                                 try {
                                     URL fileURL=tempFile.toURI().toURL();
                                     //利用 fileURL 將 image icon 加到 jLabel2
+                                    ImageIcon icon=new ImageIcon(url);
+                                    icon=new ImageIcon(icon.getImage().getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
+                                    jLabel2.setIcon(icon);
+                                    DefaultListModel model = (DefaultListModel) jList1.getModel();
+                                    jList1.setModel(model);
+                                    model.addElement(selectedItem);
                                     ////////////////////////////////////////
                                     jList1.updateUI();
                                 } catch (Exception ex) {
@@ -133,6 +143,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                 }
                                 
                             }
+                        
                         });
                     } else if (failed) {
                         progress.setVisible(false);
@@ -173,7 +184,7 @@ public class NewJFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

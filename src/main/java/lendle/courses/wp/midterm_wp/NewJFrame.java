@@ -121,7 +121,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         progress.setVisible(false);
                         jButton1.setEnabled(true);
                         //將下載好的項目加入到 jList 裡面
-                        
+                        //System.out.println(selectedItem);
                         
                         ////////////////////////////
                         SwingUtilities.invokeLater(new Runnable() {
@@ -130,7 +130,7 @@ public class NewJFrame extends javax.swing.JFrame {
                                 try {
                                     URL fileURL=tempFile.toURI().toURL();
                                     //利用 fileURL 將 image icon 加到 jLabel2
-                                    ImageIcon icon=new ImageIcon(url);
+                                    ImageIcon icon=new ImageIcon(fileURL);
                                     icon=new ImageIcon(icon.getImage().getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
                                     jLabel2.setIcon(icon);
                                     DefaultListModel model = (DefaultListModel) jList1.getModel();
